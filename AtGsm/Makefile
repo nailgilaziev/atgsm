@@ -21,10 +21,16 @@
 # List application Arduino/chipKIT/Digispark/Energia/Maple/Microduino/Teensy/Wiring libraries here
 # default = 0 = none
 #
-APP_LIBS_LIST = 0
+# ARDUINO : AVR = EEPROM HID SoftwareSerial SPI Wire 
+# ARDUINO : common = Bridge Esplora Ethernet Firmata GSM 
+#	LiquidCrystal Robot_Control Robot_Motor RobotIRremote SD Servo 
+#	SpacebrewYun Stepper Temboo TFT WiFi 
+#
+APP_LIBS_LIST = SoftwareSerial
 
 # List user's libraries here 
 # default = 0 = none
+#
 #
 USER_LIBS_LIST = 0
 
@@ -43,12 +49,15 @@ USER_LIBS_LIST = 0
 # BOARD_TAG is required
 # If not defined, error BOARD_TAG not defined
 #
-#BOARD_TAG  = mega2560
+BOARD_TAG  = nano328
+BOARD_TAG1 = nano
+BOARD_TAG2 = nano.menu.cpu.atmega328
 
 # BOARD_PORT is optional
 # If not defined, BOARD_PORT = /dev/tty.usb* (default)
 #
 #BOARD_PORT = /dev/tty.usbmodem*
+BOARD_PORT = /dev/cu.wchusbserial1410
 
 # Xcode takes SKETCHBOOK_DIR from preferences.txt
 # If not defined, each IDE has its own SKETCHBOOK_DIR (default)
@@ -78,4 +87,5 @@ MAKEFILE_PATH  = $(CURRENT_DIR)/Makefiles
 UTILITIES_PATH = $(CURRENT_DIR)/Utilities
 
 include $(MAKEFILE_PATH)/Step1.mk
+
 
