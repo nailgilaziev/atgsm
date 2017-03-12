@@ -27,4 +27,5 @@ class ConfigureCQ : public CmdsQueue{
     }
 };
 
+
 #endif /* Cmds_h */

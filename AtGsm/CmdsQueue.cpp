@@ -20,6 +20,8 @@ boolean CmdsQueue::execute(SerialRouter *sr){
             if (c == '\0') break;
             sr->s->write(c);
         }
+        sr->s->write(CR);
+        sr->s->write(LF);
         return false;
     }
 }

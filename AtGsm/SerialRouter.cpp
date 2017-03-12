@@ -12,8 +12,7 @@
 #define ERROR_UNPREDICTABLE_INPUT_END 4
 
 
-#define CR 13
-#define LF 10
+
 
 
 SerialRouter::SerialRouter(SoftwareSerial *softwareSerial){
@@ -21,7 +20,7 @@ SerialRouter::SerialRouter(SoftwareSerial *softwareSerial){
 }
 
 byte SerialRouter::readInput(){
-//    Serial.print("->");
+    Serial.print("->");
     while (s->available()) {
         if (lineCursor>=LINE_BUFFER_SIZE) {
             lineCursor = 0;
@@ -37,6 +36,7 @@ byte SerialRouter::readInput(){
         if (lineCursor==0 && (c==CR||c==LF)) {Serial.print(',');continue;} //skip empty new lines
         if (c==LF){
             if (lineBuffer[lineCursor-1] == CR) {
+//                Serial.println();
                 lineBuffer[lineCursor-1] = '\0';
                 byte r = analyzeLine();
                 lineCursor = 0;
@@ -47,7 +47,6 @@ byte SerialRouter::readInput(){
             lineBuffer[lineCursor++] = c;
         }
     }
-//    Serial.println();
     return 0; //this means that we read whole input buffer buffer, and not find answer end yet.
     // Temporarly buffer is empty and we waiting for continue to reading input
 }

@@ -9,7 +9,7 @@
 #ifndef SerialRouter_hpp
 #define SerialRouter_hpp
 
-#include "SoftwareSerialEcho.hpp"
+#include <SoftwareSerial.h>
 #include "EventsListener.hpp"
 
 #ifndef LINE_BUFFER_SIZE
@@ -17,7 +17,8 @@
 #define LINE_BUFFER_SIZE 32
 #endif
 
-
+#define CR 13
+#define LF 10
 
 //class SoftwareSerial;
 
