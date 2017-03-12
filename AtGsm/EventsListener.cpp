@@ -19,7 +19,7 @@ CmdsQueue* configereSms(){
     return new ConfigureCQ();
 }
 
-static const byte eventsCount = 3;
+static const byte eventsCount = 2;
 EventAction events[eventsCount]={
     {"MODEM:STARTUP",&echoOff},
     {"+PBREADY",&configereSms}
@@ -29,7 +29,12 @@ void EventsListener::newLineEvent(SerialRouter *sr){
     Serial.print(F("->"));
     Serial.println(sr->lineBuffer);
     for (byte i=0; i<eventsCount; i++) {
+        Serial.print(F("COMPARE "));
+        Serial.print(events[i].event);
+        Serial.print(F(" ? "));
+        Serial.println(sr->lineBuffer);
         if(strcmp(events[i].event,sr->lineBuffer)==0){
+            Serial.println(F("CQ setted"));
             delete sr->executingCmd;
             sr->executingCmd = events[i].actionCmd();
             sr->executingCmd->execute(sr);

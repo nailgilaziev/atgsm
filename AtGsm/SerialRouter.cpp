@@ -47,25 +47,35 @@ byte SerialRouter::readInput(){
             lineBuffer[lineCursor++] = c;
         }
     }
-    Serial.println();
+//    Serial.println();
     return 0; //this means that we read whole input buffer buffer, and not find answer end yet.
     // Temporarly buffer is empty and we waiting for continue to reading input
 }
 
 byte SerialRouter::analyzeLine(){
+    if (executingCmd) Serial.print(F("Analyze[CmdQ LISTENER]"));
+    else Serial.print(F("Analyze[Events LISTENER]"));
+    Serial.print(lineBuffer);
+    Serial.println(";");
     static InputListener *currentListener;
     if (executingCmd) currentListener = (InputListener *)executingCmd;
     else currentListener = &eventsListener;
     
-    if (strcmp(lineBuffer, "OK"/*okLine*/)==0) {
-        currentListener->successEvent(this);
+    if (strcmp(lineBuffer, "OK")==0) {
+        if(currentListener->successEvent(this)) resetExecutingCmd();
         return 1;
     }
-    if (strcmp(lineBuffer, "ERROR"/*errorLine*/)==0) {
-        currentListener->failureEvent(this);
+    if (strcmp(lineBuffer, "ERROR")==0) {
+        if(currentListener->failureEvent(this)) resetExecutingCmd();
         return 1;
     }
     currentListener->newLineEvent(this); //Line with some data
     return 0; //just skip it and continue listening new lines
+}
+
+void SerialRouter::resetExecutingCmd(){
+    Serial.println(F("Reset ECQ"));
+    delete executingCmd;
+    executingCmd = NULL;
 }
 

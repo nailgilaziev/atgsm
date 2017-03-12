@@ -18,8 +18,8 @@ class SerialRouter;
 class InputListener{
 public:
     virtual void newLineEvent(SerialRouter *);
-    virtual void successEvent(SerialRouter *);
-    virtual void failureEvent(SerialRouter *);
+    virtual boolean successEvent(SerialRouter *);
+    virtual boolean failureEvent(SerialRouter *);
 };
 
 #endif /* InputListener_hpp */

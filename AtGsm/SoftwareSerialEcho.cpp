@@ -17,6 +17,8 @@ void SoftwareSerial::write(char c){
     buf[pos++]=c;
 }
 
+
+
 char SoftwareSerial::read(){
     if (pos==0) return -1;
     char c0 = buf[0];

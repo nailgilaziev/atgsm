@@ -9,9 +9,9 @@
 #include "CmdsQueue.hpp"
 #include "SerialRouter.hpp"
 
-void CmdsQueue::execute(SerialRouter *sr){
+boolean CmdsQueue::execute(SerialRouter *sr){
     const char *cmd = getNext(++executingCmd);
-    if (cmd == NULL) success();
+    if (cmd == NULL)  return success(sr);
     else{
         Serial.print(F("<-"));
         Serial.println(cmd);
@@ -20,6 +20,7 @@ void CmdsQueue::execute(SerialRouter *sr){
             if (c == '\0') break;
             sr->s->write(c);
         }
+        return false;
     }
 }
 
@@ -29,18 +30,24 @@ const char * CmdsQueue::getNext(int index){
 
 void CmdsQueue::newLineEvent(SerialRouter *sr){
     //just ignore data lines. If you need save them - override
+    Serial.print(F("-->"));
+    Serial.println(sr->lineBuffer);
 }
 
-void CmdsQueue::successEvent(SerialRouter *sr){
-    execute(sr);
+boolean CmdsQueue::successEvent(SerialRouter *sr){
+    return execute(sr);
 }
 
-void CmdsQueue::failureEvent(SerialRouter *sr){
-    failure();
+boolean CmdsQueue::failureEvent(SerialRouter *sr){
+    return failure(sr);
 }
 
-void CmdsQueue::success(){}
-void CmdsQueue::failure(){}
+boolean CmdsQueue::success(SerialRouter *sr){
+    return true;
+}
+boolean CmdsQueue::failure(SerialRouter *sr){
+    return true;
+}
 
 
 

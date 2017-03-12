@@ -29,6 +29,7 @@ private:
     EventsListener eventsListener;
 public:
     CmdsQueue *executingCmd = NULL;
+    void resetExecutingCmd();
     
     //TODO for save global memory can be placed to heap
     char lineBuffer[LINE_BUFFER_SIZE];
